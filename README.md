@@ -1,54 +1,48 @@
-# Welcome to WSO2 Carbon Kernel
-WSO2 Carbon Kernel 5 is the core of the next-generation WSO2 Carbon platform. 
+# Using Carbon P2 Touchpoint
+In Carbon 5, there are product-specific runtimes, which the developer will not know about at the time of creating the feature. In order to support dynamically copying files to the runtime location during feature installation, WSO2 has introduced a custom touchpoint.
 
-Carbon Kernel 5 is completely rearchitected from the ground up with the latest technologies and patterns. Additionally, the Carbon Kernel is now a lightweight, general-purpose OSGi runtime specializing in hosting servers, providing key functionality for server developers. The result is a streamlined and even more powerful middleware platform than ever before.
+Shown below is a sample of p2.inf in order to copy a particular file to a runtime location:
 
-* **[Architecture](#architecture)**
-* **[Key Features and Tools](#key-features-and-tools)**
-* **[Getting Started](#getting-started)**
-* **[How To Contribute](#how-to-contribute)**
-* **[Contact Us](#contact-us)**
+> metaRequirements.0.namespace = org.eclipse.equinox.p2.iu <br />
+> metaRequirements.0.name = org.wso2.carbon.p2.touchpoint
+> 
+> instructions.configure = \ <br />
+> org.wso2.carbon.p2.touchpoint.copy(source:${installFolder}/../lib/features/org.wso2.carbon.touchpoint.sample_${feature.version}/bin/,target:${installFolder}/../\{runtime\}/bin/, overwrite:true);\ <br />
+> org.wso2.carbon.p2.touchpoint.copy(source:${installFolder}/../lib/features/org.wso2.carbon.touchpoint.sample_${feature.version}/conf/osgi/launch.properties,target:${installFolder}/../\{runtime\}/conf/osgi/launch.properties, overwrite:true);\
 
-## Architecture
-Carbon Kernel is a modular, light-weight, OSGi-based server development framework, which provides the base for developing servers. Eclipse Equinox is used as the OSGi runtime from Kernel 5.0.0 onwards. However, you can plug in any OSGi implementation to your Carbon server. The diagram below depicts the architecture of WSO2 Carbon Kernel and its key components.
+* `{runtime}`: which is replaced with the runtime name at the feature installation
 
-![carbon-kernel-architecture-01](https://cloud.githubusercontent.com/assets/21237558/20616347/939893b6-b307-11e6-882f-4c3f302ada0c.png)
+This custom touchpoint should be available in the p2-repo. Therefore it should be added to `generate-repo` goal as below in the product generation:
+ 
+        <plugin>
+            <groupId>org.wso2.carbon.maven</groupId>
+            <artifactId>carbon-feature-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>p2-repo-generation</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>generate-repo</goal>
+                    </goals>
+                    <configuration>
+                        <targetRepository>file:${basedir}/target/p2-repo</targetRepository>
+                        <features>
+                            <feature>
+                                <id>org.wso2.carbon.p2.touchpoint.feature</id>
+                                <version>${carbon.maven.version}</version>
+                            </feature>
+                        </features>
+                    </configuration>
+                </execution>
+                ...
+            </executions>
+            ...
+        </plugin>
 
-## Key Features and Tools
-Follow the links given below for details of the core capabilities of Carbon Kernel.
-
-* [Resolving the Component Startup Order](docs/KernelFeatures/ResolvingtheComponentStartupOrder.md)
-* [Adding New Transports](docs/KernelFeatures/AddingNewTransports.md)
-* [Plugging a New Runtime](docs/KernelFeatures/PluggingaNewRuntime.md)
-* [Using the CarbonContext API](docs/KernelFeatures/UsingtheCarbonContext.md)
-* [Developing a Carbon tool](docs/KernelFeatures/DevelopingaCarbonTool.md)
-* [Configuring Logging for a Carbon Server](docs/KernelFeatures/ConfiguringLogging.md)
-* [Monitoring Carbon Servers](docs/KernelFeatures/MonitoringCarbonServers.md)
-* [Setting Up the Carbon Launcher](docs/KernelFeatures/SettingUptheCarbonLauncher.md)
-* [Dropping OSGi Bundles into a Carbon Server](docs/KernelFeatures/DroppingOSGiBundlesintoaCarbonServer.md)
-
-Follow the links given below for details of tools, archetypes and other capabilities that can be used for developing Carbon products.
-
-* [Creating a Carbon Component in One Step using Maven Archetypes](docs/DeveloperTools/UsingMavenArchetypes.md#creating-a-carbon-component-in-one-step)
-* [Creating a Generic OSGi Bundle in One Step using Maven Archetypes](docs/DeveloperTools/UsingMavenArchetypes.md#creating-a-generic-osgi-bundle-in-one-step)
-* [Converting JARs to OSGi bundles](docs/DeveloperTools/ConvertingJARsToOSGiBundles.md)
-* [Using In-Container OSGi Testing for Development](docs/DeveloperTools/UsingIn-ContainerOSGiTesting.md)
-* [Using Annotations with OSGi Declarative Services](docs/DeveloperTools/UsingAnnotationswithOSGiDeclarativeServices.md)
-* [Setting up a Git Repository](docs/DeveloperTools/SettingUpaGitRepository.md)
-* [Accessing the Carbon Configurations](docs/DeveloperTools/AccessingCarbonConfigs.md)
-* [Designing the Product Directory Structure](docs/DeveloperTools/DesigningProductDirectoryStructure.md) 
-
-Follow the links given below for details of plugins:
-
-* [Using the Maven Bundle Plugin](docs/DeveloperTools/UsingtheMavenBundlePlugin.md)
-* [Using Carbon Touchpoint](docs/DeveloperTools/UsingCarbonTouchpoint.md)
-
-## Getting Started
-See the steps for [setting up and starting a WSO2 Carbon server](docs/GettingStarted.md).
 
 ## How To Contribute
-* Please report issues at [WSO2 Carbon Issues](https://github.com/wso2/carbon-kernel/issues).
-* Send your pull requests to [master branch](https://github.com/wso2/carbon-kernel/tree/master).
+* Please report issues at [WSO2 Carbon Issues](https://github.com/wso2/carbon-p2-touchpoints/issues).
+* Send your pull requests to [master branch](https://github.com/wso2/carbon-p2-touchpoints/tree/master).
 * You can find more instructions on howto contribute on community site (http://wso2.com/community).
 
 ## Contact Us

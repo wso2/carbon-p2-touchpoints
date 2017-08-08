@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,7 +13,9 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
---><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.wso2</groupId>
@@ -22,12 +24,12 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.wso2.carbon</groupId>
-    <artifactId>carbon-kernel</artifactId>
+    <groupId>org.wso2.carbon.touchpoints</groupId>
+    <artifactId>carbon-touchpoints</artifactId>
     <packaging>pom</packaging>
-    <version>5.2.0-SNAPSHOT</version>
-    <name>WSO2 Carbon Kernel - Aggregate Pom</name>
-    <description>WSO2 Carbon Kernel Aggregate Pom</description>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>WSO2 Carbon P2 Touchpoints - Parent</name>
+    <description>WSO2 Carbon P2 Touchpoints Parent</description>
     <url>http://wso2.com</url>
 
     <prerequisites>
@@ -41,26 +43,16 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>parent</module>
-                <module>launcher</module>
-                <module>core</module>
-                <!--Need to place archetypes module after core because tests in
-                org.wso2.carbon.archetypes.component depend on org.wso2.carbon.core-->
-                <module>archetypes</module>
-                <module>extensions</module>
-                <module>tools</module>
-                <module>pax-exam-container-carbon</module>
-                <module>features</module>
-                <module>distribution</module>
-                <module>tests</module>
+                <module>components/carbon-touchpoint</module>
+                <module>features/org.wso2.carbon.touchpoint.feature</module>
             </modules>
         </profile>
     </profiles>
 
     <scm>
-        <url>https://github.com/wso2/carbon-kernel.git</url>
-        <developerConnection>scm:git:https://github.com/wso2/carbon-kernel.git</developerConnection>
-        <connection>scm:git:https://github.com/wso2/carbon-kernel.git</connection>
+        <url>https://github.com/wso2/carbon-p2-touchpoints.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/carbon-p2-touchpoints.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/carbon-p2-touchpoints.git</connection>
         <tag>HEAD</tag>
     </scm>
 
@@ -71,6 +63,11 @@
                 <artifactId>wagon-ssh</artifactId>
                 <version>${maven.wagon.ssh.version}</version>
             </extension>
+            <extension>
+                <groupId>org.apache.maven.archetype</groupId>
+                <artifactId>archetype-packaging</artifactId>
+                <version>${maven.archetype.version}</version>
+            </extension>
         </extensions>
         <plugins>
             <plugin>
@@ -80,6 +77,37 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>docs</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.wso2.carbon.maven</groupId>
+                <artifactId>carbon-feature-plugin</artifactId>
+                <version>${carbon.feature.plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -109,7 +137,62 @@
         </plugins>
     </build>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wso2.eclipse.equinox</groupId>
+                <artifactId>org.eclipse.equinox.common</artifactId>
+                <version>${equinox.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.eclipse.equinox</groupId>
+                <artifactId>org.eclipse.equinox.p2.engine</artifactId>
+                <version>${org.eclipse.equinox.p2.engine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.eclipse.equinox</groupId>
+                <artifactId>org.eclipse.equinox.p2.metadata</artifactId>
+                <version>${org.eclipse.equinox.p2.metadata.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.touchpoints</groupId>
+                <artifactId>org.wso2.carbon.extensions.touchpoint</artifactId>
+                <version>${carbon.touchpoint.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.touchpoints</groupId>
+                <artifactId>org.wso2.carbon.touchpoint.feature</artifactId>
+                <version>${carbon.touchpoint.version}</version>
+                <type>zip</type>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <properties>
+        <carbon.touchpoint.version>1.0.0-SNAPSHOT</carbon.touchpoint.version>
+        <carbon.touchpoint.package.export.version>${carbon.touchpoint.version}</carbon.touchpoint.package.export.version>
+        <carbon.touchpoint.package.import.version.range>[1.0.0, 2.0.0)</carbon.touchpoint.package.import.version.range>
+
+        <carbon.feature.plugin.version>3.1.1</carbon.feature.plugin.version>
+
+        <org.eclipse.core.runtime.import.version.range>[3.0.0, 4.0.0)</org.eclipse.core.runtime.import.version.range>
+        <org.eclipse.equinox.p2.engine.import.version.range>[2.0.0, 3.0.0)</org.eclipse.equinox.p2.engine.import.version.range>
+        <org.eclipse.equinox.p2.touchpoint.eclipse.import.version.range>[2.0.0, 3.0.0)</org.eclipse.equinox.p2.touchpoint.eclipse.import.version.range>
+
+        <equinox.common.version>3.8.0.v20160509-1230</equinox.common.version>
+        <org.eclipse.equinox.p2.engine.version>2.3.0.v20140506-1720</org.eclipse.equinox.p2.engine.version>
+        <org.eclipse.equinox.p2.metadata.version>2.2.0.v20131211-1531</org.eclipse.equinox.p2.metadata.version>
+
+        <!--Maven Plugins -->
+        <maven.wagon.ssh.version>2.1</maven.wagon.ssh.version>
+        <maven.paxexam.plugin.version>1.2.4</maven.paxexam.plugin.version>
+        <maven.archetype.version>3.0.0</maven.archetype.version>
+        <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
+        <maven-project.version>2.2.1</maven-project.version>
+        <maven-plugin-api.version>3.3.9</maven-plugin-api.version>
+        <maven-plugin-annotations.version>3.4</maven-plugin-annotations.version>
+        <maven-core.version>3.3.9</maven-core.version>
     </properties>
 
 </project>
