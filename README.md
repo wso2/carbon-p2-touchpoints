@@ -3,8 +3,9 @@ In Carbon 5, there are product-specific runtimes, which the developer will not k
 
 Shown below is a sample of p2.inf in order to copy a particular file to a runtime location:
 
-> metaRequirements.0.namespace = org.eclipse.equinox.p2.iu <br />
-> metaRequirements.0.name = org.wso2.carbon.p2.touchpoint
+> metaRequirements.0.namespace = org.eclipse.equinox.p2.iu <br/>
+> metaRequirements.0.name = org.wso2.carbon.p2.touchpoint <br/>
+> metaRequirements.0.optional = true
 > 
 > instructions.configure = \ <br />
 > org.wso2.carbon.p2.touchpoint.copy(source:${installFolder}/../lib/features/org.wso2.carbon.touchpoint.sample_${feature.version}/bin/,target:${installFolder}/../\{runtime\}/bin/, overwrite:true);\ <br />
