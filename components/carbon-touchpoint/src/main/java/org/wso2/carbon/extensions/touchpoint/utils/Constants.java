@@ -18,7 +18,7 @@ package org.wso2.carbon.extensions.touchpoint.utils;
 /**
  * Carbon P2 Touchpoint Constants class.
  *
- * @since 5.2.0
+ * @since 1.0.0
  */
 public final class Constants {
 
