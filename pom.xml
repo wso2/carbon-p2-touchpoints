@@ -69,7 +69,84 @@
                 <version>${maven.archetype.version}</version>
             </extension>
         </extensions>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>docs</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>javadoc</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.wso2.carbon.maven</groupId>
+                    <artifactId>carbon-feature-plugin</artifactId>
+                    <version>${carbon.feature.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <configuration>
+                        <preparationGoals>clean install</preparationGoals>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>docs</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>javadoc</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
+                    </instructions>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -77,62 +154,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>docs</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>javadoc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.wso2.carbon.maven</groupId>
-                <artifactId>carbon-feature-plugin</artifactId>
-                <version>${carbon.feature.plugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <preparationGoals>clean install</preparationGoals>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>docs</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>javadoc</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -157,12 +178,12 @@
             <dependency>
                 <groupId>org.wso2.carbon.touchpoints</groupId>
                 <artifactId>org.wso2.carbon.extensions.touchpoint</artifactId>
-                <version>${carbon.touchpoint.version}</version>
+                <version>${carbon.touchpoints.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.touchpoints</groupId>
                 <artifactId>org.wso2.carbon.touchpoint.feature</artifactId>
-                <version>${carbon.touchpoint.version}</version>
+                <version>${carbon.touchpoints.version}</version>
                 <type>zip</type>
                 <scope>test</scope>
             </dependency>
@@ -170,15 +191,18 @@
     </dependencyManagement>
 
     <properties>
-        <carbon.touchpoint.version>1.0.0-SNAPSHOT</carbon.touchpoint.version>
-        <carbon.touchpoint.package.export.version>${carbon.touchpoint.version}</carbon.touchpoint.package.export.version>
-        <carbon.touchpoint.package.import.version.range>[1.0.0, 2.0.0)</carbon.touchpoint.package.import.version.range>
+        <carbon.touchpoints.version>1.0.0-SNAPSHOT</carbon.touchpoints.version>
+        <carbon.touchpoints.package.export.version>${carbon.touchpoints.version}</carbon.touchpoints.package.export.version>
+        <carbon.touchpoints.package.import.version.range>[1.0.0, 2.0.0)</carbon.touchpoints.package.import.version.range>
+        <bundle.symbolicName>${project.artifactId}</bundle.symbolicName>
 
         <carbon.feature.plugin.version>3.1.1</carbon.feature.plugin.version>
 
         <org.eclipse.core.runtime.import.version.range>[3.0.0, 4.0.0)</org.eclipse.core.runtime.import.version.range>
-        <org.eclipse.equinox.p2.engine.import.version.range>[2.0.0, 3.0.0)</org.eclipse.equinox.p2.engine.import.version.range>
-        <org.eclipse.equinox.p2.touchpoint.eclipse.import.version.range>[2.0.0, 3.0.0)</org.eclipse.equinox.p2.touchpoint.eclipse.import.version.range>
+        <org.eclipse.equinox.p2.engine.import.version.range>[2.0.0, 3.0.0)
+        </org.eclipse.equinox.p2.engine.import.version.range>
+        <org.eclipse.equinox.p2.touchpoint.eclipse.import.version.range>[2.0.0, 3.0.0)
+        </org.eclipse.equinox.p2.touchpoint.eclipse.import.version.range>
 
         <equinox.common.version>3.8.0.v20160509-1230</equinox.common.version>
         <org.eclipse.equinox.p2.engine.version>2.3.0.v20140506-1720</org.eclipse.equinox.p2.engine.version>

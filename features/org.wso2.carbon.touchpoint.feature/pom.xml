@@ -61,7 +61,7 @@
                             <bundles>
                                 <bundle>
                                     <symbolicName>org.wso2.carbon.extensions.touchpoint</symbolicName>
-                                    <version>${carbon.touchpoint.version}</version>
+                                    <version>${carbon.touchpoints.version}</version>
                                 </bundle>
                             </bundles>
                         </configuration>

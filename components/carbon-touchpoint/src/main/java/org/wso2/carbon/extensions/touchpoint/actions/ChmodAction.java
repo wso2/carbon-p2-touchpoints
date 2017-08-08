@@ -36,7 +36,7 @@ import java.util.Map;
  * This is basically a copy of natives ChmodAction class(@see org.eclipse.equinox.internal.p2.touchpoint.natives
  * .actions.ChmodAction) with {runtime} placeholder support.
  *
- * @since 5.2.0
+ * @since 1.0.0
  */
 public class ChmodAction extends ProvisioningAction {
     private static final boolean WINDOWS = java.io.File.separatorChar == '\\';

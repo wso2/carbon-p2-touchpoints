@@ -55,7 +55,7 @@
             org.eclipse.equinox.p2.engine.spi.*;version="${org.eclipse.equinox.p2.touchpoint.eclipse.import.version.range}";resolution:=optional,
         </import.package>
         <export.package>
-            org.wso2.carbon.extensions.touchpoint.actions.*;version="${carbon.touchpoint.package.export.version}"
+            org.wso2.carbon.extensions.touchpoint.actions.*;version="${carbon.touchpoints.package.export.version}"
         </export.package>
     </properties>
 </project>

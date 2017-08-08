@@ -36,7 +36,7 @@ import java.util.Map;
  * If the source is a directory, a merge copy to the target is performed.
  * Copy will copy files and directories (recursively).
  *
- * @since 5.2.0
+ * @since 1.0.0
  */
 public class CopyAction extends ProvisioningAction {
 
