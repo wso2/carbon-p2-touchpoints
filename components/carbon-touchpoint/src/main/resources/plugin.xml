@@ -32,5 +32,12 @@
                 touchpointVersion="1.0.0"
                 version="1.0.0">
         </action>
+        <action
+                class="org.wso2.carbon.extensions.touchpoint.actions.MkdirAction"
+                name="mkdir"
+                touchpointType="org.eclipse.equinox.p2.osgi"
+                touchpointVersion="1.0.0"
+                version="1.0.0">
+        </action>
     </extension>
 </plugin>
