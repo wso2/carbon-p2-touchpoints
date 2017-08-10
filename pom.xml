@@ -23,7 +23,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.wso2.carbon.touchpoints</groupId>
+    <groupId>org.wso2.carbon.touchpoint</groupId>
     <artifactId>carbon-touchpoints</artifactId>
     <packaging>pom</packaging>
     <version>1.1.0-SNAPSHOT</version>
@@ -175,12 +175,12 @@
                 <version>${org.eclipse.equinox.p2.metadata.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.touchpoints</groupId>
+                <groupId>org.wso2.carbon.touchpoint</groupId>
                 <artifactId>org.wso2.carbon.extensions.touchpoint</artifactId>
                 <version>${carbon.touchpoints.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.touchpoints</groupId>
+                <groupId>org.wso2.carbon.touchpoint</groupId>
                 <artifactId>org.wso2.carbon.touchpoint.feature</artifactId>
                 <version>${carbon.touchpoints.version}</version>
                 <type>zip</type>
